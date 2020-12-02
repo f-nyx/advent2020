@@ -1,21 +1,50 @@
 const fs = require('fs');
-const EXPECTED_SUM = 2020;
+const DOOMED_YEAR = 2020;
 
-
-function findMatch(expenses) {
+function findMatch(expenses, evaluator) {
     if (!expenses.length) {
         return null;
     }
 
     const current = expenses.shift();
     const match = expenses.find(expense =>
-        expense + current === EXPECTED_SUM
+        evaluator(current, expense)
     );
 
     if (match) {
         return [current, match];
     } else {
-        return findMatch(expenses);
+        return findMatch(expenses, evaluator);
+    }
+}
+
+function findTwo(expenses) {
+    return findMatch(expenses, (current, expense) =>
+        current + expense === DOOMED_YEAR
+    );
+}
+
+function findThree(expenses) {
+    const match = findMatch(expenses, (current, expense) => {
+        const candidate = DOOMED_YEAR - (current + expense);
+        return candidate && expenses.includes(candidate);
+    });
+
+    if (match) {
+        return [...match, DOOMED_YEAR - (match[0] + match[1])];
+    }
+
+    return match;
+}
+
+
+function printResult(match) {
+    if (match) {
+        const result = match.reduce((total, current) => total * current, 1);
+        console.log('Match found:', match);
+        console.log('Result:', result);
+    } else {
+        console.log('Match not found');
     }
 }
 
@@ -26,14 +55,9 @@ function run() {
         .map(expense => Number(expense));
 
     console.log('Expenses:', expenses);
-    const match = findMatch(expenses);
 
-    if (match) {
-        console.log('Match found:', match);
-        console.log('Result:', match[0] * match[1]);
-    } else {
-        console.log('Match not found');
-    }
+    printResult(findTwo(expenses));
+    printResult(findThree(expenses));
 }
 
 run();
