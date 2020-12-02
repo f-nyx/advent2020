@@ -32,10 +32,17 @@ function run() {
         .split('\n')
         .filter(Boolean);
     const parsedPasswords = parseAndCount(passwords);
-    const validPasswords = parsedPasswords.filter(password =>
-        password.count >= password.min && password.count <= password.max
+    const validPasswordsFormerPolicy = parsedPasswords.filter(auth =>
+        auth.count >= auth.min && auth.count <= auth.max
     );
-    console.log('Valid passwords:', validPasswords.length);
+    console.log('Valid passwords former policy:', validPasswordsFormerPolicy.length);
+
+    const validPasswordsNewPolicy = parsedPasswords.filter(auth => {
+        const first = auth.password[auth.min - 1];
+        const last = auth.password[auth.max - 1];
+        return first !== last && (first === auth.char || last === auth.char);
+    });
+    console.log('Valid passwords new policy:', validPasswordsNewPolicy.length);
 }
 
 run();
