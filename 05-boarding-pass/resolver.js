@@ -5,15 +5,6 @@ const UPPER = 1;
 const TOTAL_ROWS = 128;
 const TOTAL_COLUMNS = 8;
 
-const RowMap = {
-    F: LOWER,
-    B: UPPER
-};
-const ColumnMap = {
-    L: LOWER,
-    R: UPPER
-};
-
 function partition(total, positions) {
     const ops = {
         [LOWER]: (range, diff) => ({ ...range, up: range.up - diff }),
@@ -30,29 +21,32 @@ function partition(total, positions) {
     }
 }
 
-function findRow(ticket) {
-    const positions = ticket.substr(0, 7).split("").map(position => RowMap[position]);
-    return partition(TOTAL_ROWS, positions);
-}
-
-function findColumn(ticket) {
-    const positions = ticket.substr(-3).split("").map(position => ColumnMap[position]);
-    return partition(TOTAL_COLUMNS, positions);
-}
-
 function seatId(ticket) {
-    return findRow(ticket) * 8 + findColumn(ticket);
+    const row = partition(TOTAL_ROWS, ticket.slice(0, 7));
+    const column = partition(TOTAL_COLUMNS, ticket.slice(-3));
+    return row * 8 + column;
 }
 
 function run() {
-    const tickets = fs.readFileSync('input.txt')
+    const seatsIds = fs.readFileSync('input.txt')
         .toString()
         .split('\n')
-        .filter(Boolean);
-    const maxSeatId = tickets.reduce((max, ticket) =>
-        Math.max(max, seatId(ticket))
-    , 0);
-    console.log('Highest seat id:', maxSeatId);
+        .filter(Boolean)
+        .map(ticket =>
+            seatId(
+                ticket
+                    .replace(/[FL]/g, LOWER)
+                    .replace(/[BR]/g, UPPER)
+                    .split('').map(Number)
+            )
+        )
+        .sort((seatId1, seatId2) => seatId1 - seatId2);
+    console.log('Highest seat id:', seatsIds.slice(-1));
+
+    const prevSeat = seatsIds.findIndex((seatId, index) =>
+        seatsIds[index + 1] && seatsIds[index + 1] !== seatId + 1
+    );
+    console.log('My seat id:', seatsIds[prevSeat] + 1);
 }
 
 run();
