@@ -14,15 +14,23 @@ const parseTo = (bagsIndex, line) => {
     return bagsIndex;
 };
 
-function getTree(bagsIndex, color) {
-    return bagsIndex[color].reduce((results, bag) =>
-        [...results, ...getTree(bagsIndex, bag.color)]
-    , [color]);
+function plainGraph(bagsIndex, color, results = []) {
+    if (results.includes(color)) {
+        return results;
+    } else {
+        results.push(color);
+        for (const bag of bagsIndex[color]) {
+            if (!results.includes(bag.color)) {
+                results.push(plainGraph(bagsIndex, bag.color, results));
+            }
+        }
+        return results;
+    }
 }
 
-function calculateTotal(bagsIndex, color) {
+function totalChildBags(bagsIndex, color) {
     return bagsIndex[color].reduce((total, bag) =>
-        total + bag.count + (bag.count * calculateTotal(bagsIndex, bag.color))
+        total + bag.count + (bag.count * totalChildBags(bagsIndex, bag.color))
     , 0);
 }
 
@@ -33,10 +41,10 @@ function run() {
         .reduce(parseTo, {});
 
     const totalShinyGold = Object.keys(bagsIndex).reduce((total, color) =>
-        color !== MY_COLOR && getTree(bagsIndex, color).includes(MY_COLOR) ? total + 1 : total
+        color !== MY_COLOR && plainGraph(bagsIndex, color).includes(MY_COLOR) ? total + 1 : total
     , 0);
     console.log(totalShinyGold);
-    console.log(calculateTotal(bagsIndex, MY_COLOR));
+    console.log(totalChildBags(bagsIndex, MY_COLOR));
 }
 
 run();
