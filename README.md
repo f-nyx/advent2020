@@ -11,3 +11,5 @@ Day 4: [passport validator](https://github.com/f-nyx/advent2020/blob/master/04-p
 Day 5: [boarding pass resolver](https://github.com/f-nyx/advent2020/blob/master/05-boarding-pass)
 
 Day 6: [customs questions](https://github.com/f-nyx/advent2020/blob/master/06-customs-form)
+
+Day 7: [colored bags](https://github.com/f-nyx/advent2020/blob/master/07-colored-bags)
