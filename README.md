@@ -17,3 +17,5 @@ Day 7: [colored bags](https://github.com/f-nyx/advent2020/blob/master/07-colored
 Day 8: [game boot fix](https://github.com/f-nyx/advent2020/blob/master/08-game-boot-fix)
 
 Day 9: [encoding errors](https://github.com/f-nyx/advent2020/blob/master/09-encoding-errors)
+
+Day 10: [battery adapter](https://github.com/f-nyx/advent2020/blob/master/10-battery-adapter)
