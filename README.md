@@ -21,3 +21,5 @@ Day 9: [encoding errors](https://github.com/f-nyx/advent2020/blob/master/09-enco
 Day 10: [battery adapter](https://github.com/f-nyx/advent2020/blob/master/10-battery-adapter)
 
 Day 11: [seating system](https://github.com/f-nyx/advent2020/blob/master/11-seating-system)
+
+Day 12: [ship navigation](https://github.com/f-nyx/advent2020/blob/master/12-ship-navigation)
