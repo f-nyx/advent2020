@@ -23,3 +23,7 @@ Day 10: [battery adapter](https://github.com/f-nyx/advent2020/blob/master/10-bat
 Day 11: [seating system](https://github.com/f-nyx/advent2020/blob/master/11-seating-system)
 
 Day 12: [ship navigation](https://github.com/f-nyx/advent2020/blob/master/12-ship-navigation)
+
+Day 13: [shuttle search](https://github.com/f-nyx/advent2020/blob/master/13-shuttle-search)
+
+Day 14: [docking data](https://github.com/f-nyx/advent2020/blob/master/14-docking-data)
